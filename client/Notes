@@ -1,0 +1,28 @@
+Server:
+
+** DataBase
+  1-Install Entityframework packag: tools, Sql, Identity
+  2-Create "Models" folder and create "ApplicationDb" class whith ":IdentityDbContext",and "ApplicationRole, ApplicationUser" to manage userTable in DB
+
+	  public class ApplicationDb:IdentityDbContext<ApplicationUser,ApplicationRole,string>
+   	 {
+       	 	public ApplicationDb(DbContextOptions<ApplicationDb> options) : base(options)
+        	{  
+      	  	}  
+   	 }
+
+  3-in application.json :
+
+     "ConnectionStrings": {
+      "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=MVC_Lex2;Trusted_Connection=True;MultipleActiveResultSets=true"
+     },
+
+  4-connect database by add this code in program.cs:
+
+	 builder.Services.AddDbContext<ApplicationDb>(options =>
+   	 options.UseSqlServer(
+  	 builder.Configuration.GetConnectionString("DefaultConnection")));
+
+         app.UseAuthentication();
+
+  5- Install "Microsoft.EntityFrameworkCore.Design"
